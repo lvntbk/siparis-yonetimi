@@ -1,0 +1,8 @@
+bin/
+obj/
+SiparisApi/bin/
+SiparisApi/obj/
+.vs/
+.vscode/
+appsettings.json
+appsettings.Development.json

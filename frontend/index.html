@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Sipariş Yönetimi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sipariş Yönetimi</h1>
+        <select id="roleSelect">
+            <option value="admin">Admin</option>
+            <option value="kitchen">Mutfak</option>
+        </select>
+        
+    </header>
+
+    <section class="stats">
+        <span id="totalCount">0</span>
+        <select id="statusFilter">
+            <option value="all">Tümü</option>
+            <option value="Hazırlanıyor">Hazırlanıyor</option>
+            <option value="Teslim Edildi">Teslim Edildi</option>
+        </select>
+    </section>
+
+    <section class="order-form" id="orderForm">
+        <input id="productInput" placeholder="Ürün adı">
+        <input id="quantityInput" type="number" placeholder="Adet">
+        <button id="addBtn">Sipariş Ekle</button>
+    </section>
+
+    <ul id="orderList"></ul>
+</div>
+
+<div id="spinner" class="spinner hidden"></div>
+<div id="toast"></div>
+
+<!-- SCRIPT SONDA -->
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

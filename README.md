@@ -100,6 +100,14 @@ Uygulama çalıştığında API aşağıdaki adres üzerinden erişilebilir:
 
 http://localhost:30001/api/orders
 
+---
+
+## Notlar
+
+Bu projede öncelik, mimari tasarım ve Kubernetes tabanlı deployment süreçleridir.  
+Business logic genişletildiğinde unit ve integration testler eklenmesi planlanmaktadır.
+
+
 ✍️ Geliştirici Hakkında
 
 Levent İnce

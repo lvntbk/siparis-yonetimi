@@ -1,30 +1,51 @@
-📦 Sipariş Yönetimi Sistemi (Full-Stack & Cloud-Native)
-Bu proje; modern yazılım geliştirme prensipleri ile DevOps süreçlerini birleştiren, yüksek erişilebilirlik (high availability) odaklı bir sipariş yönetim backend sistemidir. .NET 9 teknolojisi kullanılarak geliştirilmiş ve Kubernetes (K8s) orkestrasyonu ile containerize edilmiştir.
+# 📦 Sipariş Yönetimi Sistemi (Full-Stack & Cloud-Native)
 
-🚀 Öne Çıkan Özellikler
-Modern Backend: .NET 9 Web API ve Entity Framework Core.
+Bu proje; modern yazılım geliştirme prensipleri ile DevOps süreçlerini birleştiren,  
+**yüksek erişilebilirlik (High Availability)** odaklı bir sipariş yönetim **backend** sistemidir.
 
-Kalıcı Veri: PostgreSQL veritabanı ile ilişkisel veri yönetimi.
+.NET 9 teknolojisi kullanılarak geliştirilmiş, Docker ile konteynerize edilmiş ve  
+**Kubernetes (K8s)** orkestrasyonu ile çalışacak şekilde tasarlanmıştır.
 
-Konteynerizasyon: Docker ve Docker Desktop üzerinde optimize edilmiş imajlar.
+---
 
-Orkestrasyon (Kubernetes): * Self-Healing: Pod'ların çökmesi durumunda otomatik yeniden başlatma.
+## 🚀 Öne Çıkan Özellikler
 
-Scaling: replicas: 2 konfigürasyonu ile yük dengeleme.
+- **Modern Backend:** ASP.NET Web API (.NET 9) ve Entity Framework Core
+- **Kalıcı Veri:** PostgreSQL ile ilişkisel veri yönetimi
+- **Konteynerizasyon:** Docker ve multi-stage build yapısı
+- **Kubernetes Orkestrasyonu:**
+  - **Self-Healing:** Pod çökmesi durumunda otomatik yeniden başlatma
+  - **Scaling:** `replicas: 2` ile yük dengeleme
+  - **Service Discovery:** Servislerin cluster içi haberleşmesi
+- **DevOps Pratikleri:**
+  - NodePort servisleri
+  - Port-Forwarding ile veritabanı erişimi
+  - Ortamdan bağımsız deploy süreci
 
-Service Discovery: Mikroservislerin iç ağ üzerinden ismen haberleşmesi.
+---
 
-DevOps Pratikleri: Port mapping, NodePort servisleri ve geçici tünelleme (Port-Forwarding) ile veritabanı yönetimi.
+## 🛠️ Teknoloji Yığını
 
-🛠️ Teknoloji Yığını
-Dil/Framework: C# .NET 9
+- **Dil / Framework:** C# – .NET 9
+- **Veritabanı:** PostgreSQL
+- **Altyapı:** Docker, Kubernetes, Docker Desktop
+- **Araçlar:** Entity Framework Core, kubectl, PowerShell
 
-Veritabanı: PostgreSQL
+---
 
-Altyapı: Kubernetes, Docker, Docker Desktop
+## 🏗️ Mimari
 
-Araçlar: EF Core, Kubectl, PowerShell
+Bu proje, **katmanlı ve konteyner tabanlı** bir mimariyi takip etmektedir.
 
+- **Frontend**, backend ile RESTful HTTP uç noktaları üzerinden iletişim kurar.
+- **Backend**, ASP.NET Web API kullanılarak geliştirilmiştir ve veri erişimi için Entity Framework Core kullanır.
+- **PostgreSQL**, ilişkisel veritabanı olarak kullanılır.
+- API ve veritabanı **Docker** ile konteynerize edilmiştir.
+- Sistem, ölçeklenebilirlik ve orkestrasyon için **Kubernetes** ortamında çalışacak şekilde tasarlanmıştır.
+
+### Mimari Diyagram
+
+```mermaid
 flowchart LR
     User[👤 User / Browser]
     FE[🌐 Frontend<br/>HTML + CSS + JS]
@@ -41,57 +62,51 @@ flowchart LR
     DB --> Docker
 
     Docker --> K8s
-    ## Mimari
-
-Bu proje, katmanlı ve konteyner tabanlı bir mimariyi takip etmektedir.
-
-- **Frontend**, backend ile RESTful HTTP uç noktaları üzerinden iletişim kurar.
-- **Backend**, ASP.NET Web API kullanılarak geliştirilmiştir ve veri erişimi için Entity Framework Core kullanır.
-- **PostgreSQL**, ilişkisel veritabanı olarak tercih edilmiştir.
-- API ve veritabanı, **Docker** kullanılarak konteyner haline getirilmiştir.
-- Sistem, ölçeklenebilirlik ve orkestrasyon amacıyla **Kubernetes** ortamında çalışacak şekilde tasarlanmıştır.
-
-
 
 📂 Proje Yapısı
-Plaintext
-
 siparis-yonetimi/
-├── SiparisApi/             # .NET 9 Web API Kaynak Kodları
-│   ├── Controllers/        # API Uç Noktaları
-│   ├── Models/             # Veri Modelleri
-│   ├── Dockerfile          # Multi-stage Docker Yapılandırması
-├── k8s/                    # Kubernetes Konfigürasyon Dosyaları (YAML)
-│   ├── postgres-k8s.yaml   # Veritabanı Deployment ve Servis
-│   ├── api-k8s.yaml        # API Deployment (8080 portu) ve NodePort Servis
+├── SiparisApi/
+│   ├── Controllers/        # API uç noktaları
+│   ├── Models/             # Veri modelleri
+│   ├── Dockerfile          # Multi-stage Docker yapılandırması
+│
+├── k8s/
+│   ├── postgres-k8s.yaml   # PostgreSQL Deployment & Service
+│   ├── api-k8s.yaml        # API Deployment & NodePort Service
 
 ⚙️ Kurulum ve Çalıştırma
-1. Docker İmajını Oluşturma
-PowerShell
-
+1️⃣ Docker İmajını Oluşturma
 cd SiparisApi
 docker build -t siparis-api:v1 .
-2. Kubernetes Üzerinde Yayına Alma
-PowerShell
 
+2️⃣ Kubernetes Üzerinde Yayına Alma
 cd ../k8s
 kubectl apply -f postgres-k8s.yaml
 kubectl apply -f api-k8s.yaml
-3. Veritabanı Migrasyonu (Port-Forwarding ile)
-Kubernetes içindeki veritabanını güncellemek için güvenli bir tünel açın:
-
-PowerShell
-
-# Veritabanı pod adını öğrenin
+3️⃣ Veritabanı Migrasyonu (Port-Forwarding)
 kubectl get pods
-# Tüneli başlatın
 kubectl port-forward pod/[POD_ADI] 5432:5432
-# Başka bir terminalde migrasyonu çalıştırın
+
+
+Ardından başka bir terminalde:
 dotnet ef database update --connection "Host=localhost;Port=5432;Database=SiparisDb;Username=postgres;Password=mysecretpassword"
+> ⚠️ Bu bağlantı bilgileri yalnızca **lokal geliştirme ve demo amaçlıdır**.  
+> Üretim ortamlarında şifreler **Environment Variables** veya  
+> **Kubernetes Secrets** kullanılarak yönetilmelidir.
+
 🌐 Erişim
-Uygulama ayağa kalktığında aşağıdaki adres üzerinden erişilebilir: http://localhost:30001/api/orders
+
+Uygulama çalıştığında API aşağıdaki adres üzerinden erişilebilir:
+
+http://localhost:30001/api/orders
 
 ✍️ Geliştirici Hakkında
-Levent Software Developer | C# .NET & Web Technologies | DevOps Enthusiast
 
-Gazetecilik ve felsefe geçmişinden gelen analitik düşünme yeteneğini, yazılım geliştirme ve modern altyapı süreçlerine aktaran bir geliştirici. Şu an Anadolu Üniversitesi ve Frontend Okulu'ndaki eğitimi ile Full-Stack yetkinliklerini derinleştirmeye devam etmektedir.
+Levent İnce
+Software Developer | C# .NET & Web Technologies | DevOps Enthusiast
+
+Gazetecilik ve felsefe geçmişinden gelen analitik düşünme yeteneğini,
+yazılım geliştirme ve modern altyapı süreçleriyle birleştiren bir geliştirici.
+
+Şu anda Anadolu Üniversitesi ve Frontend Okulu bünyesinde eğitimine devam ederek
+Full-Stack ve Cloud-Native yetkinliklerini derinleştirmektedir.

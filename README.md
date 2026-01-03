@@ -25,6 +25,34 @@ Altyapı: Kubernetes, Docker, Docker Desktop
 
 Araçlar: EF Core, Kubectl, PowerShell
 
+flowchart LR
+    User[👤 User / Browser]
+    FE[🌐 Frontend<br/>HTML + CSS + JS]
+    API[⚙️ .NET Web API]
+    DB[(🗄️ PostgreSQL)]
+    Docker[🐳 Docker]
+    K8s[☸️ Kubernetes]
+
+    User --> FE
+    FE -->|HTTP / JSON| API
+    API -->|EF Core| DB
+
+    API --> Docker
+    DB --> Docker
+
+    Docker --> K8s
+    ## Mimari
+
+Bu proje, katmanlı ve konteyner tabanlı bir mimariyi takip etmektedir.
+
+- **Frontend**, backend ile RESTful HTTP uç noktaları üzerinden iletişim kurar.
+- **Backend**, ASP.NET Web API kullanılarak geliştirilmiştir ve veri erişimi için Entity Framework Core kullanır.
+- **PostgreSQL**, ilişkisel veritabanı olarak tercih edilmiştir.
+- API ve veritabanı, **Docker** kullanılarak konteyner haline getirilmiştir.
+- Sistem, ölçeklenebilirlik ve orkestrasyon amacıyla **Kubernetes** ortamında çalışacak şekilde tasarlanmıştır.
+
+
+
 📂 Proje Yapısı
 Plaintext
 
